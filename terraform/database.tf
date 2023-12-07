@@ -5,8 +5,8 @@ provider "aws" {
 resource "aws_db_subnet_group" "rds_db_subnet_group" {
   name       = "rds-db-subnet-group"
   subnet_ids = [
-    "DBSubnet1",
-    "AppSubnet1",
+    "subnet-043d10bb26ba99001",
+    "subnet-009a144dd41e53f8b",
   ]
 
   tags = {
