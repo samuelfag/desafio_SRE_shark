@@ -4,7 +4,11 @@ provider "aws" {
 
 resource "aws_db_subnet_group" "rds_db_subnet_group" {
   name       = "rds-db-subnet-group"
-  subnet_ids = ["db_subnet_1", "app_subnet_1"]
+  subnet_ids = [
+    aws_subnet.db_subnet_1.id,
+    aws_subnet.app_subnet_1.id,
+  ]
+
   tags = {
     Name = "RDSDBSubnetGroup"
   }
