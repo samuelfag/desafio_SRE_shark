@@ -17,7 +17,7 @@ resource "aws_db_subnet_group" "rds_db_subnet_group" {
 resource "aws_security_group" "rds_db_security_group" {
   name        = "rds-db-security-group"
   description = "Security group for RDS DB"
-  vpc_id      = "default"
+  vpc_id      = "vpc-0d2884856a7131b15"
 
   ingress {
     from_port   = 5432
