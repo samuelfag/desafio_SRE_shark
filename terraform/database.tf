@@ -2,52 +2,42 @@ provider "aws" {
   region = "us-east-1"
 }
 
-resource "aws_db_subnet_group" "aurora_db_subnet_group" {
-  name       = "aurora-db-subnet-group"
+resource "aws_db_subnet_group" "rds_db_subnet_group" {
+  name       = "rds-db-subnet-group"
   subnet_ids = ["db_subnet_1", "app_subnet_1"]
   tags = {
-    Name = "AuroraDBSubnetGroup"
+    Name = "RDSDBSubnetGroup"
   }
 }
 
-resource "aws_security_group" "aurora_db_security_group" {
-  name        = "aurora-db-security-group"
-  description = "Security group for Aurora DB"
+resource "aws_security_group" "rds_db_security_group" {
+  name        = "rds-db-security-group"
+  description = "Security group for RDS DB"
   vpc_id      = "default"
 
   ingress {
-    from_port   = 3306
-    to_port     = 3306
+    from_port   = 5432
+    to_port     = 5432
     protocol    = "tcp"
     cidr_blocks = ["0.0.0.0/0"]
   }
 
   tags = {
-    Name = "AuroraDBSecurityGroup"
+    Name = "RDSDBSecurityGroup"
   }
 }
 
-resource "aws_rds_cluster" "aurora_cluster" {
-  cluster_identifier        = "cluster-aurora"
-  engine                    = "aurora"
-  engine_version            = "5.7.mysql_aurora.2.07.2"
-  database_name             = "metabase_db"
-  master_username           = "db_metabase"
-  master_password           = "Dasg5sg4sdfw"
-  backup_retention_period   = 7
-  preferred_backup_window   = "07:00-09:00"
-  skip_final_snapshot       = true
-  db_subnet_group_name      = aws_db_subnet_group.aurora_db_subnet_group.name
-  vpc_security_group_ids    = [aws_security_group.aurora_db_security_group.id]
-}
+resource "aws_db_instance" "rds_instance" {
+  allocated_storage    = 20
+  storage_type         = "gp2"
+  engine               = "postgres"
+  engine_version       = "13.4"
+  instance_class       = "db.t3.small"
+  identifier           = "metabase-db"
+  username             = "db_metabase"
+  password             = "Dasg5sg4sdfw"
+  parameter_group_name = "default.postgres13"
 
-resource "aws_rds_cluster_instance" "aurora_instances" {
-  count                   = 2
-  cluster_identifier      = aws_rds_cluster.aurora_cluster.id
-  instance_class          = "db.r5.large"
-  engine                  = "aurora"
-  engine_version          = "5.7.mysql_aurora.2.07.2"
-  identifier              = "aurora-instance-${count.index}"
-  publicly_accessible     = false
-  db_subnet_group_name    = aws_db_subnet_group.aurora_db_subnet_group.name
+  db_subnet_group_name     = aws_db_subnet_group.rds_db_subnet_group.name
+  vpc_security_group_ids   = [aws_security_group.rds_db_security_group.id]
 }
