@@ -31,6 +31,7 @@ resource "aws_ecs_task_definition" "metabase_task1" {
   network_mode             = "awsvpc"
   requires_compatibilities = ["FARGATE"]
   count                    = 2
+  cpu                      = 512
   container_definitions = <<DEFINITION
   [
     {
@@ -74,7 +75,8 @@ resource "aws_ecs_task_definition" "metabase_task1" {
           "value": "10.0.2.186" 
         }
       ],
-      "memory": 512
+      "memory": 512,
+      "cpu": 512
     }
   ]
   DEFINITION
