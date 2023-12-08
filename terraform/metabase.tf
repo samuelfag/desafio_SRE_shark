@@ -73,7 +73,8 @@ resource "aws_ecs_task_definition" "metabase_task1" {
           "name": "MB_DB_HOST",
           "value": "10.0.2.186" 
         }
-      ]
+      ],
+      "memory": 512
     }
   ]
   DEFINITION
