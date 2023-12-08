@@ -34,5 +34,5 @@ jobs:
        
         run: |
           cd /home/runner/work/desafio_SRE_shark/desafio_SRE_shark/terraform
-          terraform apply -auto-approve /home/runner/work/desafio_SRE_shark/desafio_SRE_shark/terraform/tfplan.out
+          terraform destroy
         

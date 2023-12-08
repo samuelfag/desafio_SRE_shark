@@ -30,7 +30,7 @@ resource "aws_ecs_task_definition" "metabase_task" {
   family                   = "metabase-task"
   network_mode             = "awsvpc"
   requires_compatibilities = ["FARGATE"]
-  cpu                      = "256"
+  cpu                      = "512"
   memory                   = "512"
 
   container_definitions = <<DEFINITION
@@ -61,7 +61,7 @@ resource "aws_ecs_task_definition" "metabase_task" {
         },
         {
           "name": "MB_DB_PORT",
-          "value": "5432" 
+          "value": "3306" 
         },
         {
           "name": "MB_DB_USER",
