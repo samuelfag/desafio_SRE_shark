@@ -32,7 +32,8 @@ resource "aws_ecs_task_definition" "metabase_task1" {
   requires_compatibilities = ["FARGATE"]
   count                    = 2
   cpu                      = 512
-  container_definitions = <<DEFINITION
+  memory                   = 1024
+  container_definitions    = <<DEFINITION
   [
     {
       "name": "metabase-container",
