@@ -26,7 +26,7 @@ resource "aws_security_group" "metabase_sg" {
   }
 }
 
-resource "aws_ecs_task_definition" "metabase_task" {
+resource "aws_ecs_task_definition" "metabase_task1" {
   family                   = "metabase-task"
   network_mode             = "awsvpc"
   requires_compatibilities = ["FARGATE"]
