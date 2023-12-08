@@ -30,8 +30,6 @@ resource "aws_ecs_task_definition" "metabase_task" {
   family                   = "metabase-task"
   network_mode             = "awsvpc"
   requires_compatibilities = ["FARGATE"]
-  cpu                      = "512"
-  memory                   = "512"
   desired_count            = 2
   container_definitions = <<DEFINITION
   [
